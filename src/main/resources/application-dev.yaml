@@ -3,14 +3,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.100.225:3306/zfcloudpan_db?timeZone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/zfcloudpandb?timeZone=Asia/Shanghai
     # redis配置
   data:
     redis:
       # Redis数据库索引（默认为0）
       database: 1
       # Redis服务器地址
-      host: 192.168.100.225
+      host: 127.0.0.1
       # Redis服务器连接端口
       port: 6379
       # Redis服务器连接密码（默认为空）
@@ -30,3 +30,6 @@ spring:
 
 server:
   port: 8080
+
+app:
+  default-role-id: 0
