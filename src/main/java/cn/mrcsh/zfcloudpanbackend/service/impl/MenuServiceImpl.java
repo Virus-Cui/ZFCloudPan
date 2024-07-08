@@ -1,6 +1,6 @@
 package cn.mrcsh.zfcloudpanbackend.service.impl;
 
-import cn.mrcsh.zfcloudpanbackend.entity.Menu;
+import cn.mrcsh.zfcloudpanbackend.entity.po.Menu;
 import cn.mrcsh.zfcloudpanbackend.mapper.MenuMapper;
 import cn.mrcsh.zfcloudpanbackend.service.MenuService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

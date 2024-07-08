@@ -1,6 +1,6 @@
 package cn.mrcsh.zfcloudpanbackend.service;
 
-import cn.mrcsh.zfcloudpanbackend.entity.Menu;
+import cn.mrcsh.zfcloudpanbackend.entity.po.Menu;
 
 import java.util.List;
 

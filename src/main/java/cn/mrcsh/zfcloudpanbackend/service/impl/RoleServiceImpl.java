@@ -1,8 +1,8 @@
 package cn.mrcsh.zfcloudpanbackend.service.impl;
 
 import cn.mrcsh.zfcloudpanbackend.config.APPConfig;
-import cn.mrcsh.zfcloudpanbackend.entity.Role;
-import cn.mrcsh.zfcloudpanbackend.entity.User;
+import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
+import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.mapper.RoleMapper;
 import cn.mrcsh.zfcloudpanbackend.service.RoleService;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;

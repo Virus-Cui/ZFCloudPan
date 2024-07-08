@@ -1,4 +1,4 @@
-package cn.mrcsh.zfcloudpanbackend.entity;
+package cn.mrcsh.zfcloudpanbackend.entity.structure;
 
 import lombok.Data;
 

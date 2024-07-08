@@ -1,5 +1,6 @@
-package cn.mrcsh.zfcloudpanbackend.entity;
+package cn.mrcsh.zfcloudpanbackend.entity.po;
 
+import cn.mrcsh.zfcloudpanbackend.entity.structure.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_user")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     private String id;
     private String userName;
     private String password;

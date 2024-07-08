@@ -1,10 +1,12 @@
 package cn.mrcsh.zfcloudpanbackend.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import cn.mrcsh.zfcloudpanbackend.entity.User;
+import cn.mrcsh.zfcloudpanbackend.entity.po.User;
+import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(String id) {
         userMapper.deleteById(id);
     }
 
@@ -44,5 +46,16 @@ public class UserServiceImpl implements UserService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role", id);
         return userMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public PageStructure<User> selectByPage(Integer pageNo, Integer pageSize, String username) {
+        PageStructure<User> structure = new PageStructure<>();
+        Page<User> page = new Page<>(pageNo, pageSize);
+        userMapper.selectPage(page, new QueryWrapper<User>().like("user_name", "%" + username + "%"));
+        structure.setPage_size(pageSize);
+        structure.setTotal(page.getTotal());
+        structure.setData(page.getRecords());
+        return structure;
     }
 }

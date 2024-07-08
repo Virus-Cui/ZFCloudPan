@@ -3,7 +3,7 @@ package cn.mrcsh.zfcloudpanbackend.controller;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class BaseController {
+public class ABaseController {
     @Data
     @AllArgsConstructor
     class response {
@@ -18,5 +18,8 @@ public class BaseController {
 
     public response success(Object data){
         return new response(200, "success", data);
+    }
+    public response error(String msg){
+        return new response(1, msg, null);
     }
 }

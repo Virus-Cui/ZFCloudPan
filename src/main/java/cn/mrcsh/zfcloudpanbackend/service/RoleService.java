@@ -1,6 +1,6 @@
 package cn.mrcsh.zfcloudpanbackend.service;
 
-import cn.mrcsh.zfcloudpanbackend.entity.Role;
+import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
 
 import java.util.List;
 
