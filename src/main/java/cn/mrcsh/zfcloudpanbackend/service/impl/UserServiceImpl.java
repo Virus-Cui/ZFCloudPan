@@ -1,6 +1,7 @@
 package cn.mrcsh.zfcloudpanbackend.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
         user.setId(IdUtil.getSnowflakeNextIdStr());
+        user.setPassword(SecureUtil.sha256(user.getPassword()));
         userMapper.insert(user);
     }
 

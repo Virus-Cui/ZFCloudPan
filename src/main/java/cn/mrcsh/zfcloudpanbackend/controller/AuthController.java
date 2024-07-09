@@ -28,19 +28,13 @@ public class AuthController extends ABaseController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/menus")
-    @AccessLog()
-    public response getMenus(){
-        List<Menu> menuList = menuService.getMenuList();
-        List<Menu> menus = TreeUtils.streamToTree(menuList, 0);
-        return success(menus);
-    }
+
 
     @PostMapping("/login")
     @AccessLog()
     public response login(UserLoginDto userLoginDto){
         String passwd = SecureUtil.md5().digestHex(userLoginDto.getPassword());
-        String passwdSource = SecureUtil.sha256().digestHex(passwd, "UTF-8");
+        String passwdSource = SecureUtil.sha256(passwd);
         log.info("SHA_密码, {}", passwdSource);
         return success();
     }

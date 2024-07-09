@@ -1,7 +1,9 @@
 package cn.mrcsh.zfcloudpanbackend.entity.po;
 
 import cn.mrcsh.zfcloudpanbackend.entity.structure.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +14,7 @@ import java.util.List;
 @Data
 @TableName("t_menu")
 public class Menu extends BaseEntity {
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String menuName;
     private String menuPurview;
@@ -20,6 +23,7 @@ public class Menu extends BaseEntity {
     private String menuComment;
     private String icon;
     private boolean outline;
+    private String menuType;
     @TableField(exist = false)
-    private List<Menu> treeMenus;
+    private List<Menu> treeMenus = null;
 }
