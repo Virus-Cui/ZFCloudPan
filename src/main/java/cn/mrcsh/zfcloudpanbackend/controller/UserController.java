@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/usr")
+@RequestMapping("/user")
 @CrossOrigin
 @Slf4j
 public class UserController extends ABaseController{
@@ -17,7 +17,7 @@ public class UserController extends ABaseController{
     @Autowired
     private UserService userService;
 
-    @GetMapping("/load_users")
+    @GetMapping
     @AccessLog()
     public response getAllUsers(Integer page_size, Integer current_page, String username){
         if(username == null){
@@ -27,7 +27,7 @@ public class UserController extends ABaseController{
         return success(userPageStructure);
     }
 
-    @DeleteMapping("/del_user/{user_id}")
+    @DeleteMapping("/{user_id}")
     public response deleteUser(@PathVariable String user_id){
         if(user_id == null){
             return error("用户ID不能为空");
@@ -36,9 +36,15 @@ public class UserController extends ABaseController{
         return success();
     }
 
-    @PostMapping("/new_user")
+    @PostMapping
     public response addUser(@RequestBody User user){
         userService.addUser(user);
+        return success();
+    }
+
+    @PutMapping
+    public response changeUser(@RequestBody User user){
+        userService.updateUser(user);
         return success();
     }
 }

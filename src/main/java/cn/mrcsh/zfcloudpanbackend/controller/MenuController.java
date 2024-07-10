@@ -17,7 +17,7 @@ public class MenuController extends ABaseController{
     @Autowired
     private MenuService menuService;
 
-    @GetMapping("/menu")
+    @GetMapping
     @AccessLog()
     public response getMenus(){
         List<Menu> menuList = menuService.getMenuList();
@@ -25,20 +25,23 @@ public class MenuController extends ABaseController{
         return success(menus);
     }
 
-    @PostMapping("/menu")
+    @PostMapping
+    @AccessLog()
     public response addMenu(@RequestBody Menu menu){
         menu.setId(null);
         menuService.addMenu(menu);
         return success();
     }
 
-    @PutMapping("/menu")
+    @PutMapping
+    @AccessLog()
     public response updateMenu(@RequestBody Menu menu){
         menuService.updateMenu(menu);
         return success();
     }
 
-    @DeleteMapping("/menu/{id}")
+    @DeleteMapping("/{id}")
+    @AccessLog()
     public response deleteMenu(@PathVariable Integer id){
         menuService.deleteMenu(id);
         return success();

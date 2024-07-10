@@ -15,8 +15,8 @@ public class AccessLog extends BaseEntity {
     private String id;
     private String path;
     private String method;
-    private String access_as;
-    private String access_from;
+    private String accessAs;
+    private String accessFrom;
     private String result;
     private String params;
 }

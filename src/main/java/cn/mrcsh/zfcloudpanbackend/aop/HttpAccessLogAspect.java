@@ -49,8 +49,8 @@ public class HttpAccessLogAspect {
         accessLog.setUpdateTime(new Date());
         accessLog.setResult(status);
         // todo 测试日志
-        accessLog.setAccess_from("127.0.0.1");
-        accessLog.setAccess_as("admin");
+        accessLog.setAccessFrom("127.0.0.1");
+        accessLog.setAccessAs("admin");
         accessLog.setParams(JSON.toJSONString(pjp.getArgs()));
         accessLogService.insertLog(accessLog);
         return process;
