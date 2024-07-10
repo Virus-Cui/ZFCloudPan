@@ -27,7 +27,20 @@ public class MenuController extends ABaseController{
 
     @PostMapping("/menu")
     public response addMenu(@RequestBody Menu menu){
+        menu.setId(null);
         menuService.addMenu(menu);
+        return success();
+    }
+
+    @PutMapping("/menu")
+    public response updateMenu(@RequestBody Menu menu){
+        menuService.updateMenu(menu);
+        return success();
+    }
+
+    @DeleteMapping("/menu/{id}")
+    public response deleteMenu(@PathVariable Integer id){
+        menuService.deleteMenu(id);
         return success();
     }
 }
