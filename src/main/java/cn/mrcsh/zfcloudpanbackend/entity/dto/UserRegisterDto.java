@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class UserRegisterDto {
     // BASE64
-    private String username;
+    private String userName;
     // BASE64
     private String password;
     private String email;

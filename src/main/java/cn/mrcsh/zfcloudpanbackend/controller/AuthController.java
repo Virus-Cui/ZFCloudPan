@@ -4,11 +4,9 @@ import cn.hutool.crypto.SecureUtil;
 import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.dto.UserLoginDto;
 import cn.mrcsh.zfcloudpanbackend.entity.dto.UserRegisterDto;
-import cn.mrcsh.zfcloudpanbackend.entity.po.Menu;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.service.MenuService;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
-import cn.mrcsh.zfcloudpanbackend.utils.TreeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +41,7 @@ public class AuthController extends ABaseController {
     @AccessLog()
     public response register(@RequestBody UserRegisterDto userRegisterDto){
         User user = new User();
-        user.setUserName(userRegisterDto.getUsername());
+        user.setUserName(userRegisterDto.getUserName());
         user.setPassword(userRegisterDto.getPassword());
         user.setEmail(userRegisterDto.getEmail());
         user.setCreateTime(new Date());

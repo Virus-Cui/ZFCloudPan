@@ -3,10 +3,12 @@ package cn.mrcsh.zfcloudpanbackend.service.impl;
 import cn.mrcsh.zfcloudpanbackend.config.APPConfig;
 import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
+import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.mapper.RoleMapper;
 import cn.mrcsh.zfcloudpanbackend.service.RoleService;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,15 +34,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional
-    public void deleteRole(Role role) {
-        List<User> users = userService.selectByRoleId(role.getId());
+    public void deleteRole(Integer roleId) {
+        List<User> users = userService.selectByRoleId(roleId);
         if(!users.isEmpty()){
             for (User user : users) {
                 user.setRole(appConfig.getDefaultRoleId());
                 userService.updateUser(user);
             }
         }
-        roleMapper.deleteById(role);
+        roleMapper.deleteById(roleId);
     }
 
     @Override
@@ -54,5 +56,14 @@ public class RoleServiceImpl implements RoleService {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_name", roleName);
         return roleMapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public PageStructure<Role> getRoles(Integer currentPage, Integer pageSize) {
+        PageStructure<Role> result = new PageStructure<>();
+        Page<Role> rolePage = roleMapper.selectPage(new Page<>(currentPage, pageSize), null);
+        result.setData(rolePage.getRecords());
+        result.setTotal(rolePage.getTotal());
+        return result;
     }
 }
