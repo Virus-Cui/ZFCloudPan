@@ -28,6 +28,7 @@ public class UserController extends ABaseController{
     }
 
     @DeleteMapping("/{user_id}")
+    @AccessLog
     public response deleteUser(@PathVariable String user_id){
         if(user_id == null){
             return error("用户ID不能为空");
@@ -37,12 +38,14 @@ public class UserController extends ABaseController{
     }
 
     @PostMapping
+    @AccessLog
     public response addUser(@RequestBody User user){
         userService.addUser(user);
         return success();
     }
 
     @PutMapping
+    @AccessLog
     public response changeUser(@RequestBody User user){
         userService.updateUser(user);
         return success();
