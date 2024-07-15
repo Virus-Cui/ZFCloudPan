@@ -1,6 +1,8 @@
 package cn.mrcsh.zfcloudpanbackend.entity.po;
 
 import cn.mrcsh.zfcloudpanbackend.entity.structure.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("t_role")
 public class Role extends BaseEntity {
+    @TableId(type = IdType.AUTO)
     private Integer id;
     private String roleName;
     private String menuIds;

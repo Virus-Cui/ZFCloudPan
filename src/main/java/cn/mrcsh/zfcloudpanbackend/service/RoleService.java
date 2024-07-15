@@ -11,4 +11,6 @@ public interface RoleService {
     void updateRole(Role role);
     List<Role> getRoles(String roleName);
     PageStructure<Role> getRoles(Integer currentPage, Integer pageSize);
+
+    Role getRole(Integer role);
 }

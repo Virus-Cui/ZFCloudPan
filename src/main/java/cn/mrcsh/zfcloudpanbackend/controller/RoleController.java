@@ -1,5 +1,7 @@
 package cn.mrcsh.zfcloudpanbackend.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
@@ -21,6 +23,8 @@ public class RoleController extends ABaseController{
 
     @GetMapping
     @AccessLog
+    @SaCheckLogin
+//    @SaCheckPermission("sys:role:select")
     public response allRoles(Integer page_size, Integer current_page){
         PageStructure<Role> roles = roleService.getRoles(current_page, page_size);
         return success(roles);
@@ -28,6 +32,8 @@ public class RoleController extends ABaseController{
 
     @AccessLog
     @PostMapping
+    @SaCheckLogin
+    @SaCheckPermission("sys:role:new")
     public response addRole(@RequestBody Role role){
         roleService.addRole(role);
         return success();
@@ -35,6 +41,8 @@ public class RoleController extends ABaseController{
 
     @AccessLog
     @DeleteMapping("/{id}")
+    @SaCheckLogin
+//    @SaCheckPermission("sys:role:remove")
     public response deleteRole(@PathVariable("id") Integer id){
         roleService.deleteRole(id);
         return success();
@@ -42,6 +50,8 @@ public class RoleController extends ABaseController{
 
     @AccessLog
     @PutMapping
+    @SaCheckLogin
+//    @SaCheckPermission("sys:role:update")
     public response updateRole(@RequestBody Role role){
         roleService.updateRole(role);
         return success();

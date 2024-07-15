@@ -1,5 +1,6 @@
 package cn.mrcsh.zfcloudpanbackend.controller;
 
+import cn.mrcsh.zfcloudpanbackend.enums.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,5 +22,8 @@ public class ABaseController {
     }
     public response error(String msg){
         return new response(1, msg, null);
+    }
+    public response error(ErrorCode e){
+        return new response(e.getCode(), e.getMessage(), null);
     }
 }

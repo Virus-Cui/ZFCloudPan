@@ -10,4 +10,6 @@ public interface MenuService {
     void deleteMenu(Integer id);
     List<Menu> getMenuList(Integer parentId);
     List<Menu> getMenuList();
+    List<Menu> getMenuListByRoleId(Integer role);
+    List<String> getAuthList(String userId);
 }

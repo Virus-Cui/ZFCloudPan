@@ -66,4 +66,9 @@ public class RoleServiceImpl implements RoleService {
         result.setTotal(rolePage.getTotal());
         return result;
     }
+
+    @Override
+    public Role getRole(Integer role) {
+        return roleMapper.selectById(role);
+    }
 }

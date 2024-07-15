@@ -37,10 +37,10 @@ public class HttpAccessLogAspect {
         String status = "成功";
         try {
             process = pjp.proceed();
-        } catch (Throwable e) {
+        } catch (RuntimeException e) {
             status = "失败: " + e.getMessage();
         }
-        log.info("[请求日志] - {} {} {}", request.getRequestURI(), request.getMethod(), process);
+        log.info("[请求日志] - {} {} {} {}", status,request.getRequestURI(), request.getMethod(), process);
         AccessLog accessLog = new AccessLog();
         accessLog.setId(IdUtil.getSnowflakeNextIdStr());
         accessLog.setPath(request.getRequestURI());

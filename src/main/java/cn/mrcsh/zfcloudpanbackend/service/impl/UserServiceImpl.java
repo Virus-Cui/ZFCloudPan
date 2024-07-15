@@ -21,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_name", user.getUserName());
+        User user1 = userMapper.selectOne(queryWrapper);
+        if(user1 != null){
+            throw new NullPointerException();
+        }
         user.setId(IdUtil.getSnowflakeNextIdStr());
         user.setPassword(SecureUtil.sha256(user.getPassword()));
         userMapper.insert(user);
