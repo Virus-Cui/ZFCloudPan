@@ -22,7 +22,7 @@ public class MenuController extends ABaseController{
     @GetMapping
     @AccessLog()
     @SaCheckLogin
-//    @SaCheckPermission("sys:menu:select")
+    @SaCheckPermission("sys:menu:select")
     public response getMenus(){
         List<Menu> menuList = menuService.getMenuList();
         List<Menu> menus = TreeUtils.streamToTree(menuList, 0);
@@ -32,7 +32,7 @@ public class MenuController extends ABaseController{
     @PostMapping
     @AccessLog()
     @SaCheckLogin
-//    @SaCheckPermission("sys:menu:new")
+    @SaCheckPermission("sys:menu:new")
     public response addMenu(@RequestBody Menu menu){
         menu.setId(null);
         menuService.addMenu(menu);
@@ -42,7 +42,7 @@ public class MenuController extends ABaseController{
     @PutMapping
     @AccessLog()
     @SaCheckLogin
-//    @SaCheckPermission("sys:menu:update")
+    @SaCheckPermission("sys:menu:update")
     public response updateMenu(@RequestBody Menu menu){
         menuService.updateMenu(menu);
         return success();
@@ -51,7 +51,7 @@ public class MenuController extends ABaseController{
     @DeleteMapping("/{id}")
     @AccessLog()
     @SaCheckLogin
-//    @SaCheckPermission("sys:menu:remove")
+    @SaCheckPermission("sys:menu:remove")
     public response deleteMenu(@PathVariable Integer id){
         menuService.deleteMenu(id);
         return success();

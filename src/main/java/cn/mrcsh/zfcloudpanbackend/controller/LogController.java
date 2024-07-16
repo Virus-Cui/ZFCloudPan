@@ -5,16 +5,17 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.mrcsh.zfcloudpanbackend.entity.po.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.service.AccessLogService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/log")
 @CrossOrigin
-public class LogController extends ABaseController{
+@Slf4j
+public class LogController extends ABaseController {
 
     @Autowired
     private AccessLogService accessLogService;
@@ -22,7 +23,7 @@ public class LogController extends ABaseController{
     @GetMapping
     @SaCheckLogin
     @SaCheckPermission("sys:log:select")
-    public response logs(Integer page_size, Integer current_page){
+    public response logs(Integer page_size, Integer current_page) {
         PageStructure<AccessLog> result = accessLogService.selectPage(page_size, current_page);
         return success(result);
     }

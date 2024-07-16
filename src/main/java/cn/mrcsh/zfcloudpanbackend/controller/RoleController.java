@@ -24,7 +24,7 @@ public class RoleController extends ABaseController{
     @GetMapping
     @AccessLog
     @SaCheckLogin
-//    @SaCheckPermission("sys:role:select")
+    @SaCheckPermission("sys:role:select")
     public response allRoles(Integer page_size, Integer current_page){
         PageStructure<Role> roles = roleService.getRoles(current_page, page_size);
         return success(roles);
@@ -42,7 +42,7 @@ public class RoleController extends ABaseController{
     @AccessLog
     @DeleteMapping("/{id}")
     @SaCheckLogin
-//    @SaCheckPermission("sys:role:remove")
+    @SaCheckPermission("sys:role:remove")
     public response deleteRole(@PathVariable("id") Integer id){
         roleService.deleteRole(id);
         return success();
@@ -51,7 +51,7 @@ public class RoleController extends ABaseController{
     @AccessLog
     @PutMapping
     @SaCheckLogin
-//    @SaCheckPermission("sys:role:update")
+    @SaCheckPermission("sys:role:update")
     public response updateRole(@RequestBody Role role){
         roleService.updateRole(role);
         return success();

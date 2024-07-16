@@ -2,9 +2,12 @@ package cn.mrcsh.zfcloudpanbackend.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
+import cn.mrcsh.zfcloudpanbackend.enums.WSType;
+import cn.mrcsh.zfcloudpanbackend.manager.WSManager;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +61,13 @@ public class UserController extends ABaseController{
     @SaCheckPermission("sys:user:update")
     public response changeUser(@RequestBody User user){
         userService.updateUser(user);
+        return success();
+    }
+
+    @GetMapping("/kick")
+    public response kickUser(@RequestParam String user_id){
+        WSManager.send2Session(user_id, WSType.KICK, "踢出");
+        StpUtil.kickout(user_id);
         return success();
     }
 }

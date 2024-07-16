@@ -3,6 +3,7 @@ package cn.mrcsh.zfcloudpanbackend.service.impl;
 import cn.mrcsh.zfcloudpanbackend.entity.po.Menu;
 import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
 import cn.mrcsh.zfcloudpanbackend.mapper.MenuMapper;
+import cn.mrcsh.zfcloudpanbackend.mapper.RoleMapper;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
 import cn.mrcsh.zfcloudpanbackend.service.MenuService;
 import cn.mrcsh.zfcloudpanbackend.service.RoleService;
@@ -13,9 +14,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.RouteMatcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -25,6 +31,9 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private RoleMapper roleMapper;
     @Qualifier("userMapper")
     @Autowired
     private UserMapper userMapper;
@@ -41,6 +50,20 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public void deleteMenu(Integer id) {
+        //删除角色中的菜单
+        List<Role> roles = roleMapper.selectList(null);
+        if (roles.isEmpty()) {
+            return;
+        }
+        roles.forEach(e->{
+            List<Integer> menuIds = new ArrayList<>(List.of(JSON.parseObject(e.getMenuIds(), Integer[].class)));
+            List<Integer> AuthIds = new ArrayList<>(List.of(JSON.parseObject(e.getAuthIds(), Integer[].class)));
+            menuIds.removeIf(item->item.equals(id));
+            AuthIds.removeIf(item->item.equals(id));
+            e.setMenuIds(JSON.toJSONString(menuIds));
+            e.setAuthIds(JSON.toJSONString(AuthIds));
+            roleMapper.updateById(e);
+        });
         menuMapper.deleteById(id);
     }
 
