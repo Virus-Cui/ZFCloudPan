@@ -1,7 +1,6 @@
 package cn.mrcsh.zfcloudpanbackend.manager;
 
 
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.XWS;
 import cn.mrcsh.zfcloudpanbackend.enums.WSType;
@@ -41,14 +40,14 @@ public class WSManager {
     public void onClose(Session session) {
         SESSION_ID_POOL.remove(session.getId());
         SESSION_POOL.remove(ID_POOL.get(session.getId()));
-        log.info("关闭链接");
+        log.info("[websocket] 关闭链接 | session-id: {}", session.getId());
     }
 
     public void addToSessionPool(Session session, String id) {
         SESSION_POOL.putIfAbsent(id, session);
         SESSION_ID_POOL.putIfAbsent(session.getId(), session);
         ID_POOL.put(session.getId(), id);
-        log.info("新建立连接 | session-id: {}, login-id: {}", session.getId(), id);
+        log.info("[websocket] 新建立连接 | session-id: {}, login-id: {}", session.getId(), id);
     }
 
     public static void send2Session(String id, WSType type, String msg){
