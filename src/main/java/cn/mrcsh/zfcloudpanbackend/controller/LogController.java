@@ -5,8 +5,6 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.mrcsh.zfcloudpanbackend.entity.po.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.service.AccessLogService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/log")
 @CrossOrigin
 @Slf4j
-public class LogController extends ABaseController {
+public class LogController extends BaseController {
 
     @Autowired
     private AccessLogService accessLogService;

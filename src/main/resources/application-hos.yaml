@@ -54,3 +54,12 @@ sa-token:
   is-log: true
   jwt-secret-key: hksahdlakshsakdhasldasd
 
+minio:
+  # 存储桶的名字
+  bucketName: develop
+  # 服务后端地址
+  endpoint: http://127.0.0.1:9000
+  # Key
+  accessKey: BKnj3kUhjQavfOw9BAjE
+  # Secret
+  secretKey: 05pyqQm56QL4T6OJMMno80F7Ntir7ffiXT8xejAu

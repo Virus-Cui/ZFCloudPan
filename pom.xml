@@ -100,6 +100,13 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <!-- Minio依赖 -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.5</version>
+        </dependency>
+
 
 
     </dependencies>
@@ -113,7 +120,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <!--表示编译版本配置有效-->
-                    <fork>true</fork>
+<!--                    <fork>true</fork>-->
                     <!--引入第三方jar包时,不添加则引入的第三方jar不会被打入jar包中-->
                     <includeSystemScope>true</includeSystemScope>
                     <!--排除第三方jar文件-->

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 @CrossOrigin
 @Slf4j
-public class UserController extends ABaseController{
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;

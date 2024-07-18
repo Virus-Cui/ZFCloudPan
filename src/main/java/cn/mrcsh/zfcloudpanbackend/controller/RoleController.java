@@ -10,13 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/role")
 @CrossOrigin
 @Slf4j
-public class RoleController extends ABaseController{
+public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;

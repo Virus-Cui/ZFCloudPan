@@ -4,7 +4,7 @@ import cn.mrcsh.zfcloudpanbackend.enums.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class ABaseController {
+public class BaseController {
     @Data
     @AllArgsConstructor
     class response {

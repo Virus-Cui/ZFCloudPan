@@ -14,7 +14,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/menu")
-public class MenuController extends ABaseController{
+public class MenuController extends BaseController {
 
     @Autowired
     private MenuService menuService;
