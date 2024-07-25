@@ -66,6 +66,7 @@ public class AuthController extends BaseController {
         user.setEmail(userRegisterDto.getEmail());
         user.setCreateTime(new Date());
         user.setUpdateTime(new Date());
+        user.setRole(userRegisterDto.getRole());
         user.setSettings("{}");
         try {
             userService.addUser(user);

@@ -9,4 +9,5 @@ public class UserRegisterDto {
     // BASE64
     private String password;
     private String email;
+    private Integer role;
 }

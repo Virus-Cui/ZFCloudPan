@@ -9,4 +9,6 @@ import org.springframework.stereotype.Component;
 public class APPConfig {
     @Value("${app.default-role-id}")
     private Integer defaultRoleId;
+    @Value("${app.data-save-path}")
+    private String dataSavePath;
 }

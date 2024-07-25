@@ -36,6 +36,7 @@ server:
 
 app:
   default-role-id: 0
+  data-save-path: D:/Pan
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
   # token 名称（同时也是 cookie 名称）
