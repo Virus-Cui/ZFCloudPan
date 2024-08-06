@@ -11,4 +11,5 @@ public class UploadFileDto {
     private MultipartFile file;
     private Long file_size;
     private String file_id;
+    private String file_pid;
 }

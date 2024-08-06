@@ -5,6 +5,8 @@ public enum FileTypes {
     EXE("exe", new String[]{".exe"}),
     DOC("doc", new String[]{".doc"}),
     PDF("pdf", new String[]{".pdf"}),
+    PSD("psd", new String[]{".psd"}),
+
     EXCEL("excel", new String[]{".xls", ".xlsx"}),
     MEDIA("media", new String[]{".mkv",".mp4"}),
     ZIP("zip", new String[]{".zip",".rar",".gz",".tar",".xz",".7z"}),

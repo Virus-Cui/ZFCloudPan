@@ -1,14 +1,17 @@
 package cn.mrcsh.zfcloudpanbackend.entity.po;
 
+import cn.mrcsh.zfcloudpanbackend.entity.structure.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.MultipartFile;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("t_file_info")
-public class FileInfo {
+public class FileInfo extends BaseEntity {
     // 文件ID
     @TableId
     private String fileId;
@@ -26,8 +29,6 @@ public class FileInfo {
     private String fileOwner;
     // 文件父ID
     private String filePid;
-    // 文件是否放入回收站
-    private boolean deleted;
     // 视频文件缩略图
     private String fileAvatar;
     // 上传状态
