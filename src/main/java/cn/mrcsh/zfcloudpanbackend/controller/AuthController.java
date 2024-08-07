@@ -29,9 +29,9 @@ public class AuthController extends BaseController {
 
 
 
-    @PostMapping("/login")
+    @PostMapping("/login/{sys}")
     @AccessLog()
-    public response login(@RequestBody UserLoginDto userLoginDto){
+    public response login(@RequestBody UserLoginDto userLoginDto, @PathVariable String sys){
         UserVo userVo = new UserVo();
         userVo.setUsername(userLoginDto.getUsername());
         String passwd =userLoginDto.getPassword();
@@ -45,7 +45,7 @@ public class AuthController extends BaseController {
             StpUtil.login(user.getId());
             String tokenValue = StpUtil.getTokenInfo().getTokenValue();
             userVo.setToken(tokenValue);
-            userVo.setMenus(menuService.getMenuListByRoleId(user.getRole()));
+            userVo.setMenus(menuService.getMenuListByRoleId(user.getRole(),sys));
             return success(userVo);
         }
         return error("密码错误");

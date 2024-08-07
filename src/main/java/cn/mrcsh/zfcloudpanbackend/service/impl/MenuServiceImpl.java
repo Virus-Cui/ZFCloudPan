@@ -80,13 +80,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> getMenuListByRoleId(Integer roleId) {
+    public List<Menu> getMenuListByRoleId(Integer roleId, String sys) {
         Role role = roleService.getRole(roleId);
         List<Menu> source = new ArrayList<>();
         String menuIds = role.getMenuIds();
         List ids = JSON.parseObject(menuIds, List.class);
         ids.forEach(id -> {
-            source.add(menuMapper.selectById(Integer.parseInt(String.valueOf(id))));
+            Menu menu = menuMapper.selectById(Integer.parseInt(String.valueOf(id)));
+            if(menu.getSys().equals(sys)){
+                source.add(menu);
+            }
         });
         return TreeUtils.streamToTree(source, 0);
     }

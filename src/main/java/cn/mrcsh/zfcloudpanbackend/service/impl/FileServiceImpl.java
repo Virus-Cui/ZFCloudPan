@@ -4,7 +4,6 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.mrcsh.zfcloudpanbackend.config.APPConfig;
 import cn.mrcsh.zfcloudpanbackend.entity.po.FileInfo;
-import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.mapper.FileInfoMapper;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
@@ -114,14 +113,13 @@ public class FileServiceImpl implements FileService {
             }
             // 下载
             File file = new File(config.getDataSavePath() + File.separator + fileInfo.getFileAbsPath());
+            response.setContentLengthLong(file.length());
             FileInputStream fis = new FileInputStream(file);
-            byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
-            response.setContentLength(buffer.length);
-            response.setHeader("Content-Range", "" + Integer.valueOf(buffer.length - 1));
-            response.setHeader("Etag", "W/\"9767057-1323779115364\"");
-            response.setHeader("Accept-Ranges", "bytes");
-            response.getOutputStream().write(buffer);
+            byte[] buffer = new byte[config.getBufferSize()];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                response.getOutputStream().write(buffer, 0, bytesRead);
+            }
             response.getOutputStream().flush();
             response.getOutputStream().close();
             fis.close();

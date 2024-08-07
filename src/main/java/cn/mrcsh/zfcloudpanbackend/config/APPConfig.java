@@ -11,4 +11,6 @@ public class APPConfig {
     private Integer defaultRoleId;
     @Value("${app.data-save-path}")
     private String dataSavePath;
+    @Value("${app.buffer-size}")
+    private Integer bufferSize;
 }

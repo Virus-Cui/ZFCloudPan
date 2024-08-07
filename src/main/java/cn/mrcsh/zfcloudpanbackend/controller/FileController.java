@@ -67,9 +67,8 @@ public class FileController extends BaseController {
         return success(page);
     }
 
-    @PostMapping("/download_file")
+    @GetMapping("/download_file")
     public void download_file(HttpServletRequest request, HttpServletResponse response, String file_id, String type) throws IOException {
         fileService.download(request, response, file_id, type);
-
     }
 }

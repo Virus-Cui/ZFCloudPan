@@ -24,6 +24,7 @@ public class Menu extends BaseEntity {
     private String icon;
     private boolean outline;
     private String menuType;
+    private String sys;
     @TableField(exist = false)
     private List<Menu> treeMenus = null;
 }
