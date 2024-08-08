@@ -3,11 +3,14 @@ package cn.mrcsh.zfcloudpanbackend.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.mrcsh.zfcloudpanbackend.config.APPConfig;
+import cn.mrcsh.zfcloudpanbackend.config.Temp;
 import cn.mrcsh.zfcloudpanbackend.entity.po.FileInfo;
+import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.mapper.FileInfoMapper;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
 import cn.mrcsh.zfcloudpanbackend.service.FileService;
+import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,10 +35,13 @@ public class FileServiceImpl implements FileService {
     private UserMapper userMapper;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private APPConfig config;
 
     @Override
-    public void save(FileInfo fileInfo) throws IOException {
+    public synchronized void save(FileInfo fileInfo) throws IOException {
         FileInfo source = mapper.selectById(fileInfo.getFileId());
         if (source == null) {
             fileInfo.setCreateTime(new Date());
@@ -43,6 +49,14 @@ public class FileServiceImpl implements FileService {
         } else {
             fileInfo.setUpdateTime(new Date());
             mapper.updateById(fileInfo);
+        }
+        if(fileInfo.getChunkNum().equals(fileInfo.getChunkIndex()+1)){
+            Temp.num++;
+            String loginId = (String) StpUtil.getLoginId();
+            User user = userMapper.selectById(loginId);
+            user.setUsedStorage(user.getUsedStorage()+fileInfo.getFileSize());
+            userMapper.updateById(user);
+            System.out.println("完事儿"+Temp.num+"|"+user.getUsedStorage()+"|"+fileInfo.getFileSize()+"|"+(user.getUsedStorage()+fileInfo.getFileSize()));
         }
         saveFile(fileInfo);
     }
@@ -127,5 +141,29 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
             throw new NullPointerException("文件不存在");
         }
+    }
+
+    @Override
+    public boolean can_upload(long file_size) {
+        User user = userService.getUserById(StpUtil.getLoginId());
+        return user.getUsedStorage() + file_size <= user.getStorage();
+    }
+
+    @Override
+    public void removeFile(String fileId) {
+        User user = userService.getUserById(StpUtil.getLoginId());
+        QueryWrapper<FileInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("file_owner", user.getId())
+                .eq("file_id", fileId);
+        FileInfo fileInfo = mapper.selectOne(queryWrapper);
+        if(fileInfo == null){
+            throw new NullPointerException("无效文件");
+        }
+        mapper.deleteById(fileId);
+        File deleteFile = new File(config.getDataSavePath()+File.separator+fileInfo.getFileAbsPath());
+        deleteFile.delete();
+        user.setUsedStorage(user.getUsedStorage()-fileInfo.getFileSize());
+        userService.updateUser(user);
     }
 }

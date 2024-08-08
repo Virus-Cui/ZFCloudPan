@@ -1,26 +1,21 @@
 package cn.mrcsh.zfcloudpanbackend.controller;
 
-import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
+import cn.mrcsh.zfcloudpanbackend.annotation.Lock;
 import cn.mrcsh.zfcloudpanbackend.entity.dto.UploadFileDto;
 import cn.mrcsh.zfcloudpanbackend.entity.po.FileInfo;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
-import cn.mrcsh.zfcloudpanbackend.enums.FileTypes;
+import cn.mrcsh.zfcloudpanbackend.handler.FileUploaderHandler;
 import cn.mrcsh.zfcloudpanbackend.service.FileService;
+import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/stream")
@@ -31,40 +26,34 @@ public class FileController extends BaseController {
     @Autowired
     private FileService fileService;
 
-    @PostMapping("/upload")
+    @Autowired
+    private FileUploaderHandler handler;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping
     @AccessLog()
     public response upload_file(UploadFileDto uploadFileDto) throws InterruptedException, IOException {
-        FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileAvatar(null);
-        fileInfo.setFileName(uploadFileDto.getFile_name());
-        fileInfo.setFileType(FileTypes.getFileType("." + FileUtil.getSuffix(fileInfo.getFileName())).getType());
-        fileInfo.setFileMd5(null);
-        fileInfo.setFileOwner((String) StpUtil.getLoginId());
-        fileInfo.setFilePid("");
-        fileInfo.setFileSize(uploadFileDto.getFile_size());
-        fileInfo.setDeleted(false);
-        fileInfo.setStatus("uploading");
-        fileInfo.setChunkNum(uploadFileDto.getChunk_num());
-        fileInfo.setChunkIndex(uploadFileDto.getChunk_index());
-        fileInfo.setFile(uploadFileDto.getFile());
-        fileInfo.setFilePid(uploadFileDto.getFile_pid());
-        if (uploadFileDto.getChunk_index() == 0) {
-            fileInfo.setFileId(IdUtil.getSnowflakeNextIdStr());
-        } else {
-            fileInfo.setFileId(uploadFileDto.getFile_id());
+        // 检查空间是否足够
+        if (fileService.can_upload(uploadFileDto.getFile_size())) {
+            String s = handler.chunk_upload(uploadFileDto);
+            System.out.println(s);
+            return success(s);
         }
-        fileInfo.setFileAbsPath((String) StpUtil.getLoginId() + "/" + fileInfo.getFileId() + "." + FileUtil.getSuffix(fileInfo.getFileName()));
-        if (uploadFileDto.getChunk_index() + 1 == uploadFileDto.getChunk_num()) {
-            fileInfo.setStatus("completed");
-        }
-        fileService.save(fileInfo);
-        return success(fileInfo.getFileId());
+        return error("空间不足");
     }
 
     @GetMapping
     public response getFiles(HttpServletRequest request, String filePid, Integer page_size, Integer current_page) {
         PageStructure<FileInfo> page = fileService.getFileList(request, filePid,page_size,current_page);
         return success(page);
+    }
+
+    @DeleteMapping
+    public response deleteFile(String file_id){
+        fileService.removeFile(file_id);
+        return success();
     }
 
     @GetMapping("/download_file")

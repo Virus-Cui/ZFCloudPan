@@ -38,6 +38,7 @@ public class HttpAccessLogAspect {
         try {
             process = pjp.proceed();
         } catch (RuntimeException e) {
+            e.printStackTrace();
             status = "失败: " + e.getMessage();
         }
         log.info("[请求日志] - {} {} {} {}", status,request.getRequestURI(), request.getMethod(), process);

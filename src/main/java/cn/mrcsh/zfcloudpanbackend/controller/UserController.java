@@ -6,6 +6,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
+import cn.mrcsh.zfcloudpanbackend.entity.vo.UserStorageVo;
 import cn.mrcsh.zfcloudpanbackend.enums.WSType;
 import cn.mrcsh.zfcloudpanbackend.manager.WSManager;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
@@ -69,5 +70,11 @@ public class UserController extends BaseController {
         WSManager.send2Session(user_id, WSType.KICK, "踢出");
         StpUtil.kickout(user_id);
         return success();
+    }
+
+    @GetMapping("/storage")
+    public response getStorage() {
+        UserStorageVo storageVo = userService.getUserStorage();
+        return success(storageVo);
     }
 }

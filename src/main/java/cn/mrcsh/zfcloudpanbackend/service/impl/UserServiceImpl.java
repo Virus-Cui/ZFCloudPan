@@ -1,9 +1,11 @@
 package cn.mrcsh.zfcloudpanbackend.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.mrcsh.zfcloudpanbackend.entity.po.User;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
+import cn.mrcsh.zfcloudpanbackend.entity.vo.UserStorageVo;
 import cn.mrcsh.zfcloudpanbackend.mapper.UserMapper;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -24,7 +26,7 @@ public class UserServiceImpl implements UserService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_name", user.getUserName());
         User user1 = userMapper.selectOne(queryWrapper);
-        if(user1 != null){
+        if (user1 != null) {
             throw new NullPointerException();
         }
         user.setId(IdUtil.getSnowflakeNextIdStr());
@@ -65,5 +67,25 @@ public class UserServiceImpl implements UserService {
         structure.setTotal(page.getTotal());
         structure.setData(page.getRecords());
         return structure;
+    }
+
+    @Override
+    public UserStorageVo getUserStorage() {
+        String loginId = (String) StpUtil.getLoginId();
+        User user = userMapper.selectById(loginId);
+        UserStorageVo vo = new UserStorageVo();
+        vo.setTotal_storage(user.getStorage());
+        vo.setUsed_storage(user.getUsedStorage());
+        return vo;
+    }
+
+    @Override
+    public User getUserById(String id) {
+        return userMapper.selectById(id);
+    }
+
+    @Override
+    public User getUserById(Object id) {
+        return userMapper.selectById((String) id);
     }
 }

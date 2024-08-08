@@ -15,5 +15,7 @@ public class User extends BaseEntity {
     private Integer role;
     private String email;
     private String avatar;
+    private long storage;
+    private long usedStorage;
     private String settings;
 }

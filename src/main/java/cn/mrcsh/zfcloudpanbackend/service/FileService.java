@@ -16,4 +16,8 @@ public interface FileService {
     PageStructure<FileInfo> getFileList(HttpServletRequest request, String filePid, Integer page_size, Integer current_page);
 
     void download(HttpServletRequest request, HttpServletResponse response, String fileId, String type);
+
+    boolean can_upload(long file_size);
+
+    void removeFile(String fileId);
 }
