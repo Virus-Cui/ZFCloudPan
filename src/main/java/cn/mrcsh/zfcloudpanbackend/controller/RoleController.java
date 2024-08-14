@@ -6,6 +6,7 @@ import cn.mrcsh.zfcloudpanbackend.annotation.AccessLog;
 import cn.mrcsh.zfcloudpanbackend.entity.po.Role;
 import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.service.RoleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/role")
 @CrossOrigin
 @Slf4j
+@Tag(name = "角色模块")
 public class RoleController extends BaseController {
 
     @Autowired

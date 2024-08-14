@@ -8,6 +8,7 @@ import cn.mrcsh.zfcloudpanbackend.entity.structure.PageStructure;
 import cn.mrcsh.zfcloudpanbackend.handler.FileUploaderHandler;
 import cn.mrcsh.zfcloudpanbackend.service.FileService;
 import cn.mrcsh.zfcloudpanbackend.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.io.IOException;
 @RequestMapping("/stream")
 @CrossOrigin
 @Slf4j
+@Tag(name = "文件模块")
 public class FileController extends BaseController {
 
     @Autowired
