@@ -92,7 +92,7 @@ public class MinioUtils {
         return false;
     }
 
-    /**\
+    /**
      * 创建存储桶
      * @param bucketName 桶名称
      * @return 是否成功
